@@ -33,7 +33,7 @@ class GifWindow(QMainWindow):
             self.buffer.open(QBuffer.ReadOnly)
 
         # Set gif content to be same size as window (600px / 400px)
-        self.MovieLabel.setGeometry(QRect(0, 0, 600, 400))
+        self.MovieLabel.setGeometry(QRect(0, 0, 480, 260))
         self.MovieLabel.setAlignment(Qt.AlignCenter)
         self.movie = QMovie(self.buffer)
         self.MovieLabel.setMovie(self.movie)
