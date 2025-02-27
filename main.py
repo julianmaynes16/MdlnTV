@@ -12,11 +12,12 @@ class GifWindow(QMainWindow):
 
     def __init__(self, type, emote):
         super().__init__()
+        self.setWindowtitle("MdlnTV")
         self.emote_url = None
         if type == "name":
             self.SearchEmote(self.emote_url)
         else:
-            self.emote_url = "https://cdn.7tv.app/emote/" + emote + "/4x.webp"
+            self.emote_url = "https://cdn.7tv.app/emote/" + emote + "/4x.gif"
         
         self.setStyleSheet("background-color: #1E1E1E;")
         
@@ -56,7 +57,7 @@ class GifWindow(QMainWindow):
         emotes = await mySevenTvSession.emote_search(emote, case_sensitive=True)
         print(emotes)
         mySevenTvSession.close() # later close the session
-        self.emote_url = "https:" + emotes[0].host_url + "/4x.webp" # get the url from the emote object
+        self.emote_url = "https:" + emotes[0].host_url + "/4x.gif" # get the url from the emote object
         await mySevenTvSession.close()
 
 
