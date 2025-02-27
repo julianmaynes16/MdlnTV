@@ -90,5 +90,5 @@ if __name__ == "__main__":
         
         # window = GifWindow("https://cdn.7tv.app/emote/01JFEY3QWV7EW547PAVX19ZWNF/4x.webp")
         window.show()
-        sys.exit(app.exec_())
+        sys.exit(app.exec())
 
