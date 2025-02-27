@@ -57,7 +57,7 @@ class GifWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = GifWindow("name", "AINTNOWAY")
-    window.setFixedSize(QSize(480, 320))
+    window.setFixedSize(QSize(480, 280))
     # window = GifWindow("https://cdn.7tv.app/emote/01JFEY3QWV7EW547PAVX19ZWNF/4x.webp")
     window.show()
     sys.exit(app.exec_())
