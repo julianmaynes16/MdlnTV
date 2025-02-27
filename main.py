@@ -14,7 +14,7 @@ class GifWindow(QMainWindow):
         super().__init__()
         self.emote_url = None
         self.SearchEmote(self.emote_url)
-        # Resize main window to be 600px / 400px
+        self.setStyleSheet("background-color: #1E1E1E;")
         
         self.MovieLabel = QLabel(self)
         asyncio.run(self.SearchEmote(emote))
@@ -25,14 +25,14 @@ class GifWindow(QMainWindow):
 
         response = requests.get(self.emote_url)
         if response.status_code == 200:
-            gif_data = response.content  # Get GIF bytes
+            gif_data = response.content  
 
-            # Store GIF bytes in QBuffer (acts like a file)
+            
             self.buffer = QBuffer()
             self.buffer.setData(QByteArray(gif_data))
             self.buffer.open(QBuffer.ReadOnly)
 
-        # Set gif content to be same size as window (600px / 400px)
+       
         self.MovieLabel.setGeometry(QRect(0, 0, 480, 260))
         self.MovieLabel.setAlignment(Qt.AlignCenter)
         self.movie = QMovie(self.buffer)
