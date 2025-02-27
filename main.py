@@ -12,7 +12,7 @@ class GifWindow(QMainWindow):
 
     def __init__(self, type, emote):
         super().__init__()
-        self.setWindowtitle("MdlnTV")
+        self.setWindowTitle("MdlnTV")
         self.emote_url = None
         if type == "name":
             self.SearchEmote(self.emote_url)
