@@ -59,7 +59,7 @@ class GifWindow(QMainWindow):
 
 
 if __name__ == "__main__":
-    if sys.argc < 3:
+    if len(sys.argv) < 3:
         print("Please provide more arguments.")
     else:
         app = QApplication(sys.argv)
