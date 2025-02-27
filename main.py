@@ -10,13 +10,13 @@ import seventv
 
 class GifWindow(QMainWindow):
 
-    def __init__(self, type , emote):
+    def __init__(self, type, emote):
         super().__init__()
         self.emote_url = None
         if type == "name":
             self.SearchEmote(self.emote_url)
         else:
-            self.emote_url = "https://cdn.7tv.app/emote/" + emote + "/4x.git"
+            self.emote_url = "https://cdn.7tv.app/emote/" + emote + "/4x.webp"
         
         self.setStyleSheet("background-color: #1E1E1E;")
         
@@ -47,14 +47,15 @@ class GifWindow(QMainWindow):
     def change_emote(self, new_gif):
         self.emote_url = self.SearchEmote(new_gif)
 
+    # The library can only do async stuff and I probably butchered how im doing it. 
     async def SearchEmote(self, emote : str) -> str:
         mySevenTvSession = seventv.seventv()
         # initialize an instance of the seventv() class. this must happen in an asynchronous context
 
         emotes = await mySevenTvSession.emote_search(emote, case_sensitive=True)
-
+        print(emotes)
         mySevenTvSession.close() # later close the session
-        self.emote_url = "https:" + emotes[0].host_url + "/4x.gif" # get the url from the emote object
+        self.emote_url = "https:" + emotes[0].host_url + "/4x.webp" # get the url from the emote object
         await mySevenTvSession.close()
 
 
