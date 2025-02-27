@@ -33,7 +33,7 @@ class GifWindow(QMainWindow):
             self.buffer.open(QBuffer.ReadOnly)
 
        
-        self.MovieLabel.setGeometry(QRect(0, 0, 480, 260))
+        self.MovieLabel.setGeometry(QRect(0, 0, 480, 290))
         self.MovieLabel.setAlignment(Qt.AlignCenter)
         self.movie = QMovie(self.buffer)
         self.MovieLabel.setMovie(self.movie)
@@ -57,7 +57,7 @@ class GifWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = GifWindow("name", "AINTNOWAY")
-    window.setFixedSize(QSize(480, 260))
+    window.setFixedSize(QSize(480, 290))
     
     # window = GifWindow("https://cdn.7tv.app/emote/01JFEY3QWV7EW547PAVX19ZWNF/4x.webp")
     window.show()
