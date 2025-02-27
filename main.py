@@ -17,8 +17,8 @@ class GifWindow(QMainWindow):
         # Resize main window to be 600px / 400px
         self.resize(600, 400)
         self.MovieLabel = QLabel(self)
-        loop = asyncio.get_event_loop()
-        loop.create_task(self.SearchEmote(emote))
+        asyncio.run(self.SearchEmote(emote))
+        self.load_gif()
         
 
     def load_gif(self):
@@ -44,22 +44,21 @@ class GifWindow(QMainWindow):
         self.emote_url = self.SearchEmote(new_gif)
 
     async def SearchEmote(self, emote : str) -> str:
-        async with seventv.seventv() as mySevenTvSession:
-            emotes = await mySevenTvSession.emote_search(emote, case_sensitive=True)
+        mySevenTvSession = seventv.seventv()
+        # initialize an instance of the seventv() class. this must happen in an asynchronous context
 
-        if emotes:
-            self.emote_url = "https:" + emotes[0].host_url + "/4x.gif"
-            self.load_gif
+        emotes = await mySevenTvSession.emote_search(emote, case_sensitive=True)
+
+        mySevenTvSession.close() # later close the session
+        self.emote_url = "https:" + emotes[0].host_url + "/4x.gif" # get the url from the emote object
+        await mySevenTvSession.close()
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = GifWindow("name", "AINTNOWAY")
     
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
     # window = GifWindow("https://cdn.7tv.app/emote/01JFEY3QWV7EW547PAVX19ZWNF/4x.webp")
     window.show()
-    loop.run_until_complete(asyncio.sleep(0))
     sys.exit(app.exec_())
 
