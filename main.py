@@ -55,7 +55,7 @@ class GifWindow(QMainWindow):
         # initialize an instance of the seventv() class. this must happen in an asynchronous context
 
         emotes = await mySevenTvSession.emote_search(emote, case_sensitive=True)
-        print(emotes)
+
         mySevenTvSession.close() # later close the session
         self.emote_url = "https:" + emotes[0].host_url + "/4x.gif" # get the url from the emote object
         await mySevenTvSession.close()
