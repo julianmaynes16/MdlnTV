@@ -32,14 +32,15 @@ class GifWindow(QMainWindow):
             gif_data = response.content  
 
             
-            self.buffer = QBuffer()
-            self.buffer.setData(QByteArray(gif_data))
-            self.buffer.open(QBuffer.ReadOnly)
+            # self.buffer = QBuffer()
+            # self.buffer.setData(QByteArray(gif_data))
+            # self.buffer.open(QBuffer.ReadOnly)
 
        
         self.MovieLabel.setGeometry(QRect(0, 0, 480, 290))
         self.MovieLabel.setAlignment(Qt.AlignCenter)
-        self.movie = QMovie(self.buffer)
+        # self.movie = QMovie(self.buffer)
+        self.movie = QMovie(self.emote_url)
         self.MovieLabel.setMovie(self.movie)
         self.movie.start()
         
