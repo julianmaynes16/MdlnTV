@@ -10,37 +10,51 @@ import seventv
 
 class GifWindow(QMainWindow):
 
-    def __init__(self, type, emote):
+    def __init__(self, name_type, emote_type, emote):
         super().__init__()
         self.setWindowTitle("MdlnTV")
         self.emote_url = None
-        if type == "name":
-            self.SearchEmote(self.emote_url)
+
+        if emote_type not in ["gif", "pic"]:
+            print("ERROR: Please identify the type of emote (either \"gif\" or \"pic\")")
+            return
+
+        if name_type == "name":
+            self.SearchEmote(self.emote_url, emote_type)
+        elif name_type == "id":
+            self.emote_url = "https://cdn.7tv.app/emote/" + emote + "/4x.gif" if emote_type == "gif" else "https://cdn.7tv.app/emote/" + emote + "/4x.webp"
         else:
-            self.emote_url = "https://cdn.7tv.app/emote/" + emote + "/4x.gif"
+            print("ERROR: Please input a valid name type of the emote (either \"name\" or \"id\")")
+            return
         
         self.setStyleSheet("background-color: #1E1E1E;")
         
         self.MovieLabel = QLabel(self)
         asyncio.run(self.SearchEmote(emote))
-        self.load_gif()
+        self.load_gif(emote_type)
         
 
-    def load_gif(self):
+    def load_gif(self, emote_type):
 
         response = requests.get(self.emote_url)
         if response.status_code == 200:
-            gif_data = response.content  
-
-            
-            self.buffer = QBuffer()
-            self.buffer.setData(QByteArray(gif_data))
-            self.buffer.open(QBuffer.ReadOnly)
+            emote_data = response.content
+            emote_to_display = None
+            if emote_type == "gif": 
+                # self.buffer = QBuffer()
+                # self.buffer.setData(QByteArray(emote_data))
+                # self.buffer.open(QBuffer.ReadOnly)
+                buffer = QBuffer()
+                buffer.setData(QByteArray(emote_data))
+                buffer.open(QBuffer.ReadOnly)
+                emote_to_display = buffer
+            else:
+                print("lol")
 
        
         self.MovieLabel.setGeometry(QRect(0, 0, 480, 290))
         self.MovieLabel.setAlignment(Qt.AlignCenter)
-        self.movie = QMovie(self.buffer)
+        self.movie = QMovie(emote_to_display)
         self.MovieLabel.setMovie(self.movie)
         self.movie.start()
         
@@ -49,23 +63,23 @@ class GifWindow(QMainWindow):
         self.emote_url = self.SearchEmote(new_gif)
 
     # The library can only do async stuff and I probably butchered how im doing it. 
-    async def SearchEmote(self, emote : str) -> str:
+    async def SearchEmote(self, emote : str, emote_type : str) -> str:
         mySevenTvSession = seventv.seventv()
         # initialize an instance of the seventv() class. this must happen in an asynchronous context
 
         emotes = await mySevenTvSession.emote_search(emote, case_sensitive=True)
 
         mySevenTvSession.close() # later close the session
-        self.emote_url = "https:" + emotes[0].host_url + "/4x.gif" # get the url from the emote object
+        self.emote_url = "https:" + emotes[0].host_url + "/4x.gif" if emote_type == "gif" else "https:" + emotes[0].host_url + "/4x.webp"
         await mySevenTvSession.close()
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 4:
         print("Please provide more arguments.")
     else:
         app = QApplication(sys.argv)
-        window = GifWindow(sys.argv[1], sys.argv[2])
+        window = GifWindow(sys.argv[1], sys.argv[2], sys.argv[3])
         window.setFixedSize(QSize(480, 290))
         
         # window = GifWindow("https://cdn.7tv.app/emote/01JFEY3QWV7EW547PAVX19ZWNF/4x.webp")
