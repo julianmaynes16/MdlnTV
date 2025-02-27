@@ -14,6 +14,7 @@ class GifWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("MdlnTV")
         self.emote_url = None
+        self.buffer = None
 
         if emote_type not in ["gif", "pic"]:
             print("ERROR: Please identify the type of emote (either \"gif\" or \"pic\")")
@@ -29,34 +30,39 @@ class GifWindow(QMainWindow):
         
         self.setStyleSheet("background-color: #1E1E1E;")
         
-        self.MovieLabel = QLabel(self)
-        asyncio.run(self.SearchEmote(emote))
+        self.emote_label = QLabel(self)
+        self.emote_label.setGeometry(QRect(0, 0, 480, 290))
+        self.emote_label.setAlignment(Qt.AlignCenter)
+
+        asyncio.run(self.SearchEmote(emote, emote_type))
         self.load_gif(emote_type)
         
 
     def load_gif(self, emote_type):
 
         response = requests.get(self.emote_url)
+        
         if response.status_code == 200:
             emote_data = response.content
             emote_to_display = None
+            
+            
             if emote_type == "gif": 
-                # self.buffer = QBuffer()
-                # self.buffer.setData(QByteArray(emote_data))
-                # self.buffer.open(QBuffer.ReadOnly)
-                buffer = QBuffer()
-                buffer.setData(QByteArray(emote_data))
-                buffer.open(QBuffer.ReadOnly)
-                emote_to_display = buffer
-            else:
-                print("lol")
+                self.buffer = QBuffer()
+                self.buffer.setData(QByteArray(emote_data))
+                self.buffer.open(QBuffer.ReadOnly)
+                emote_to_display = self.buffer
+                
+                self.movie = QMovie(emote_to_display)
+                self.emote_label.setMovie(self.movie)
+                self.movie.start()
 
+            else:
+                pixmap = QPixmap()
+                pixmap.loadFromData(emote_data)
+                self.emote_label.setPixmap(pixmap)
+                self.emote_label.show()
        
-        self.MovieLabel.setGeometry(QRect(0, 0, 480, 290))
-        self.MovieLabel.setAlignment(Qt.AlignCenter)
-        self.movie = QMovie(emote_to_display)
-        self.MovieLabel.setMovie(self.movie)
-        self.movie.start()
         
 
     def change_emote(self, new_gif):
