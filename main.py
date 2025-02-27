@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QApplication, QLabel, QMainWindow
 from PySide6.QtGui import QPixmap, QMovie
-from PySide6.QtCore import Qt, QRect, QByteArray, QBuffer
+from PySide6.QtCore import Qt, QRect, QByteArray, QBuffer, QSize
 import sys
 import requests
 import urllib.request
@@ -15,7 +15,7 @@ class GifWindow(QMainWindow):
         self.emote_url = None
         self.SearchEmote(self.emote_url)
         # Resize main window to be 600px / 400px
-        self.resize(600, 400)
+        
         self.MovieLabel = QLabel(self)
         asyncio.run(self.SearchEmote(emote))
         self.load_gif()
@@ -57,7 +57,7 @@ class GifWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = GifWindow("name", "AINTNOWAY")
-    
+    window.setFixedSize(QSize(480, 320))
     # window = GifWindow("https://cdn.7tv.app/emote/01JFEY3QWV7EW547PAVX19ZWNF/4x.webp")
     window.show()
     sys.exit(app.exec_())
