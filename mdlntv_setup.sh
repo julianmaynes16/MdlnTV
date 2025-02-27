@@ -6,5 +6,9 @@ if [ ! -d "/.venv/" ]; then
   python -m venv .venv
 fi
 
-export PATH=/.venv/bin:$PATH
+. .venv/bin/activate
+
+python main.py
+
+
 
