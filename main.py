@@ -13,7 +13,11 @@ class GifWindow(QMainWindow):
     def __init__(self, type , emote):
         super().__init__()
         self.emote_url = None
-        self.SearchEmote(self.emote_url)
+        if type == "name":
+            self.SearchEmote(self.emote_url)
+        else:
+            self.emote_url = "https://cdn.7tv.app/emote/" + emote + "/4x.git"
+        
         self.setStyleSheet("background-color: #1E1E1E;")
         
         self.MovieLabel = QLabel(self)
@@ -55,11 +59,14 @@ class GifWindow(QMainWindow):
 
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = GifWindow("name", "AINTNOWAY")
-    window.setFixedSize(QSize(480, 290))
-    
-    # window = GifWindow("https://cdn.7tv.app/emote/01JFEY3QWV7EW547PAVX19ZWNF/4x.webp")
-    window.show()
-    sys.exit(app.exec_())
+    if sys.argc < 3:
+        print("Please provide more arguments.")
+    else:
+        app = QApplication(sys.argv)
+        window = GifWindow(sys.argv[1], sys.argv[2])
+        window.setFixedSize(QSize(480, 290))
+        
+        # window = GifWindow("https://cdn.7tv.app/emote/01JFEY3QWV7EW547PAVX19ZWNF/4x.webp")
+        window.show()
+        sys.exit(app.exec_())
 

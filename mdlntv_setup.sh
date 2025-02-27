@@ -8,7 +8,7 @@ fi
 
 . .venv/bin/activate
 
-python main.py
+python main.py $1 $2
 
 
 
