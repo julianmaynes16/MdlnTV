@@ -85,7 +85,7 @@ if __name__ == "__main__":
         print("Please provide more arguments.")
     else:
         app = QApplication(sys.argv)
-        window = GifWindow(sys.argv[1], sys.argv[2], sys.argv[3])
+        window = GifWindow(sys.argv[0], sys.argv[1], sys.argv[2])
         window.setFixedSize(QSize(480, 290))
         
         # window = GifWindow("https://cdn.7tv.app/emote/01JFEY3QWV7EW547PAVX19ZWNF/4x.webp")
