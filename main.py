@@ -51,15 +51,15 @@ class GifWindow(QMainWindow):
                 self.buffer = QBuffer()
                 self.buffer.setData(QByteArray(emote_data))
                 self.buffer.open(QBuffer.ReadOnly)
-                emote_to_display = self.buffer
                 
-                self.movie = QMovie(emote_to_display)
+                self.movie = QMovie(self.buffer)
                 self.emote_label.setMovie(self.movie)
                 self.movie.start()
 
             else:
                 pixmap = QPixmap()
-                pixmap.loadFromData(emote_data)
+                if not pixmap.loadFromData(emote_data):
+                    print("ERROR: Failed to load image from data")
                 self.emote_label.setPixmap(pixmap)
                 self.emote_label.show()
        
