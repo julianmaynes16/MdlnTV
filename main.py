@@ -23,7 +23,7 @@ class GifWindow(QMainWindow):
         if name_type == "name":
             self.SearchEmote(self.emote_url, emote_type)
         elif name_type == "id":
-            self.emote_url = "https://cdn.7tv.app/emote/" + emote + "/4x.gif" if emote_type == "gif" else "https://cdn.7tv.app/emote/" + emote + "/4x.webp"
+            self.emote_url = "https://cdn.7tv.app/emote/" + emote + "/4x.gif" if emote_type == "gif" else "https://cdn.7tv.app/emote/" + emote + "/4x.png"
         else:
             print("ERROR: Please input a valid name type of the emote (either \"name\" or \"id\")")
             return
@@ -76,7 +76,7 @@ class GifWindow(QMainWindow):
         emotes = await mySevenTvSession.emote_search(emote, case_sensitive=True)
 
         mySevenTvSession.close() # later close the session
-        self.emote_url = "https:" + emotes[0].host_url + "/4x.gif" if emote_type == "gif" else "https:" + emotes[0].host_url + "/4x.webp"
+        self.emote_url = "https:" + emotes[0].host_url + "/4x.gif" if emote_type == "gif" else "https:" + emotes[0].host_url + "/4x.png"
         await mySevenTvSession.close()
 
 
